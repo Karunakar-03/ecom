@@ -28,7 +28,7 @@ client = razorpay.Client(auth=("rzp_test_SzppdEzy51SPYd", "ZXV3p1lSRtZFXpt9wXac4
 from werkzeug.utils import secure_filename #used to check secured filenames or not
 import os
 
-mydb=connection.MySQLConnection(user='userdata',host='localhost',password='Karunakar@420',db='ecom')
+mydb=connection.MySQLConnection(user='root',host='localhost',password='Karunakar@420',db='ecom')
 app=Flask(__name__)
 app.permanent_session_lifetime=timedelta(days=1)
 CORS(app,supports_credentials=True)
