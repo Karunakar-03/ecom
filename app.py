@@ -1,20 +1,68 @@
+# from flask import Flask,request,redirect,url_for,jsonify,session,make_response
+# from flask_cors import CORS
+# from flask_session import Session #security layer
+# from flask_bcrypt import Bcrypt
+# import re
+# from io import BytesIO
+# from otp import genotp
+# from cmail import send_mail
+# from stoken import endata,dndata
+# from mysql.connector import (connection)
+# from datetime import timedelta
+# from reportlab.platypus import(
+#     SimpleDocTemplate,
+#     Table,
+#     TableStyle,
+#     Paragraph,
+#     Spacer
+# )
+# from reportlab.lib import colors
+# from reportlab.lib.styles import getSampleStyleSheet
+# from reportlab.lib.pagesizes import A4
+# from reportlab.platypus.flowables import HRFlowable
+
+# import uuid
+# import razorpay
+# client = razorpay.Client(auth=("rzp_test_SzppdEzy51SPYd", "ZXV3p1lSRtZFXpt9wXac4kI8"))
+
+# from werkzeug.utils import secure_filename #used to check secured filenames or not
+# import os
+
+# mydb=connection.MySQLConnection(user='ecomuser',host='localhost',password='Karunakar@420',db='ecom')
+# app=Flask(__name__)
+# app.permanent_session_lifetime=timedelta(days=1)
+# CORS(app,supports_credentials=True)
+# app.secret_keys='Code123'
+# app.config['SESSION_TYPE']='filesystem'
+# app.config['SESSION_COOKIE_SECURE']=True
+# app.config['SESSION_COOKIE_HTTPONLY']=True
+# app.config['SESSION_COOKIE_SAMESITE']='None'
+# Session(app)
+# #upload Folder creation in Static dynamically
+# BASE_DIR=os.path.abspath(os.path.dirname(__file__)) #return app directory path
+# print(BASE_DIR)
+# UPLOAD_FOLDER=os.path.join(BASE_DIR,'static','uploads')
+# print(UPLOAD_FOLDER)
+# os.makedirs(UPLOAD_FOLDER,exist_ok=True)
+# ALLOWED_EXTENSIONS={"png","jpeg","jpg","gif","webp","jfif"}
+# MAX_CONTENT_LENGTH=6 *1024*1024 #6MB
+# app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
+# bcrypt=Bcrypt(app)
 from flask import Flask,request,redirect,url_for,jsonify,session,make_response
 from flask_cors import CORS
+from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_session import Session #security layer
 from flask_bcrypt import Bcrypt
 import re
-from io import BytesIO
 from otp import genotp
 from cmail import send_mail
 from stoken import endata,dndata
 from mysql.connector import (connection)
 from datetime import timedelta
+from io import BytesIO
+
 from reportlab.platypus import(
-    SimpleDocTemplate,
-    Table,
-    TableStyle,
-    Paragraph,
-    Spacer
+    SimpleDocTemplate,Table,TableStyle,Paragraph,Spacer
 )
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
@@ -28,9 +76,11 @@ client = razorpay.Client(auth=("rzp_test_SzppdEzy51SPYd", "ZXV3p1lSRtZFXpt9wXac4
 from werkzeug.utils import secure_filename #used to check secured filenames or not
 import os
 
-mydb=connection.MySQLConnection(user='root',host='localhost',password='Karunakar@420',db='ecom')
+mydb=connection.MySQLConnection(user='root',host='localhost',password='Kannammalu',db='ecommercedb')
 app=Flask(__name__)
+app.wsgi_app=ProxyFix(app.wsgi_app,x_proto=1,x_host=1)
 app.permanent_session_lifetime=timedelta(days=1)
+app.config['PREFERRED_URL_SCHEME']='https'
 CORS(app,supports_credentials=True)
 app.secret_keys='Code123'
 app.config['SESSION_TYPE']='filesystem'
